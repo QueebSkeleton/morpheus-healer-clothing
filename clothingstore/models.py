@@ -14,7 +14,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name_plural = 'categories'
 
@@ -23,7 +23,8 @@ class Product(models.Model):
     """
     An individual designed product. Has variants.
     """
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        Category, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(max_length=80, db_index=True, unique=True)
     name = models.CharField(max_length=80)
     description = models.TextField(blank=True)
