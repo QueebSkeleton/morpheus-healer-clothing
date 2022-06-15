@@ -9,14 +9,18 @@
         <div class="col mb-5">
             <div class="card h-100">
                 <!-- Product image-->
-                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                {% if product.image_count > 0%}
+                <img class="card-img-top" src="{{ product.productimage_set.all.0.image.url }}" style="max-width: 450px;">
+                {% else %}
+                <img class="card-img-top" src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg" alt="...">
+                {% endif %}
                 <!-- Product details-->
                 <div class="card-body">
                     <div class="text-center">
                         <!-- Product name-->
-                        <h5 class="fw-bolder">{{ product.name }}</h5>
+                        <h5 class="fw-bolder">{{ product.title }}</h5>
                         <!-- Product price-->
-                        Php{{ product.variant_set.all.0.unit_price }}
+                        Php{{ product.unit_price|floatformat:2 }}
                     </div>
                 </div>
                 <!-- Product actions-->

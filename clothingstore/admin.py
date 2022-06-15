@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Product, Variant
+from .models import Category, Product, ProductImage, Order, OrderItem
 
 # Register your models here.
 
@@ -9,21 +9,39 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name',)
     search_fields = ('slug', 'name',)
 
-    fields = ('name', 'slug', 'description',)
     prepopulated_fields = {'slug': ('name',)}
 
 
-class VariantInline(admin.StackedInline):
-    model = Variant
-    extra = 0
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
     min_num = 1
+    extra = 0
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'enabled',)
+    list_display = ('title', 'units_in_stock', 'enabled',)
     
-    fields = ('name', 'slug', 'category', 'description', 'enabled',)
-    prepopulated_fields = {'slug': ('name',)}
-    inlines = [VariantInline]
+    prepopulated_fields = {'stock_keeping_unit': ('title',)}
+    inlines = [ProductImageInline,]
 
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    min_num = 1
+    extra = 0
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('placed_by', 'billing_address', 'shipping_address', 'status', 'get_total')
+    list_filter = ('status',)
+
+    inlines = [OrderItemInline,]
+
+    def get_queryset(self, request):
+        queryset = super(OrderAdmin, self).get_queryset(request)
+        return queryset.prefetch_related('orderitem_set')
+
+    @admin.display
+    def placed_by(self, obj):
+        return obj.placed_by.first_name + ' ' + obj.placed_by.last_name

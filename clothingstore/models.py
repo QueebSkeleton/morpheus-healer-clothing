@@ -1,7 +1,6 @@
-import datetime
-
+from unicodedata import decimal
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth import models as auth_models
 
 
 class Category(models.Model):
@@ -21,44 +20,70 @@ class Category(models.Model):
 
 class Product(models.Model):
     """
-    An individual designed product. Has variants.
+    An individual designed product.
     """
-    category = models.ForeignKey(
-        Category, null=True, on_delete=models.SET_NULL)
-    slug = models.SlugField(max_length=80, db_index=True, unique=True)
-    name = models.CharField(max_length=80)
-    description = models.TextField(blank=True)
+    category = models.ForeignKey(to=Category, null=True,
+                                 on_delete=models.SET_NULL)
+    stock_keeping_unit = models.SlugField(max_length=255, db_index=True,
+                                          primary_key=True)
+    title = models.CharField(max_length=80)
+    body = models.TextField(blank=True)
     enabled = models.BooleanField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-
-    def is_recent(self):
-        """
-        Checks if this product is created in the last week.
-        """
-        now = timezone.now()
-        return now - datetime.timedelta(days=7) <= self.created_on <= now
-
-
-class Variant(models.Model):
-    """
-    Variant of a product design. Contains its own inventory information.
-    """
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    name = models.CharField(max_length=80)
-    description = models.TextField()
-    stock_keeping_unit = models.SlugField(
-        max_length=255, db_index=True, unique=True)
-    unit_cost = models.DecimalField(max_digits=7, decimal_places=2)
     units_in_stock = models.PositiveSmallIntegerField()
-    unit_price = models.DecimalField(max_digits=7, decimal_places=2)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
+    unit_cost = models.DecimalField(max_digits=9, decimal_places=4)
+    unit_price = models.DecimalField(max_digits=9, decimal_places=4)
+
+    def __str__(self):
+        return self.title
+
+    def is_available(self):
+        return self.units_in_stock > 0
+
+
+class ProductImage(models.Model):
+    """
+    An image reference for a product.
+    """
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    image = models.ImageField()
+    alternate_text = models.CharField(max_length=255)
 
 
 class Order(models.Model):
-    pass
+    """
+    Represents an order made by a customer.
+    """
+    placed_by = models.ForeignKey(to=auth_models.User,
+                                  on_delete=models.PROTECT)
+    billing_address = models.TextField()
+    shipping_address = models.TextField()
+    status = models.CharField(choices=(('NEW', 'New'),
+                                       ('PRC', 'Processing'),
+                                       ('DLV', 'Delivering'),
+                                       ('FIN', 'Finished'),
+                                       ('DND', 'Denied'),
+                                       ('CNC', 'Cancelled')),
+                              max_length=3)
+    delivery_fee = models.DecimalField(max_digits=9, decimal_places=4)
+    additional_notes = models.TextField(null=True, blank=True)
+    payment_details = models.TextField()
+
+    def get_total(self):
+        total = 0
+        for orderitem in self.orderitem_set.all():
+            total += orderitem.get_subtotal()
+        total += self.delivery_fee
+        return total
 
 
 class OrderItem(models.Model):
-    pass
+    """
+    A purchased item inside of an order.
+    """
+    order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Product, on_delete=models.PROTECT)
+    unit_price = models.DecimalField(max_digits=9, decimal_places=4)
+    quantity = models.PositiveSmallIntegerField()
+
+    def get_subtotal(self):
+        return self.unit_price * self.quantity
