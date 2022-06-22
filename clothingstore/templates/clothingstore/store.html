@@ -3,33 +3,44 @@
 {% block title %}Order the clothes you want{% endblock %}
 {# Products #}
 {% block content %}
-<section class="container py-4 px-4">
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        {% for product in product_list %}
-        <div class="col mb-5">
-            <div class="card h-100">
-                <!-- Product image-->
-                {% if product.image_count > 0%}
-                <img class="card-img-top" src="{{ product.productimage_set.all.0.image.url }}" style="max-width: 450px;">
-                {% else %}
-                <img class="card-img-top" src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg" alt="...">
-                {% endif %}
-                <!-- Product details-->
-                <div class="card-body">
-                    <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">{{ product.title }}</h5>
-                        <!-- Product price-->
-                        Php{{ product.unit_price|floatformat:2 }}
+    {# Banners #}
+    {% include 'clothingstore/banner.html' %}
+    <section class="container py-4 px-4">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in product_list %}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        {% if product.image_count > 0 %}
+                            <img class="card-img-top"
+                                 src="{{ product.productimage_set.all.0.image.url }}"
+                                 style="max-width: 450px;">
+                        {% else %}
+                            <img class="card-img-top"
+                                 src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
+                                 alt="...">
+                        {% endif %}
+                        <!-- Product details-->
+                        <div class="card-body">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ product.title }}</h5>
+                                <!-- Product price-->
+                                Php{{ product.unit_price|floatformat:2 }}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto"
+                                   href="{% url 'clothingstore:add_to_cart' product.stock_keeping_unit %}">
+                                    View product
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</section>
+    </section>
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'clothingstore/base.html' %}
+{% load widget_tweaks %}
+{# Title #}
+{% block title %}Order the clothes you want{% endblock %}
+{# Products #}
+{% block content %}
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6">
+                    <img class="card-img-top mb-5 mb-md-0"
+                         src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+                         alt="...">
+                </div>
+                <div class="col-md-6">
+                    <form method="post">
+                        <div class="small mb-1">SKU: {{ product.stock_keeping_unit }}</div>
+                        <h1 class="display-5 fw-bolder">{{ product.title }}</h1>
+                        <div class="fs-5 mb-5">
+                            <span>Php{{ product.unit_price|floatformat:2 }}</span>
+                        </div>
+                        <p class="lead">{{ product.body|default_if_none:"Description coming soon!" }}</p>
+                        {% if form.quantity.errors %}
+                            {% for error in form.quantity.errors %}<p class="text-danger">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                        <div class="d-flex">
+                            {% csrf_token %}
+                            {% render_field form.quantity class="form-control text-center me-3" style="max-width: 5rem;" %}
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                Add to cart
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
