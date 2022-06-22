@@ -9,6 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name',)
     search_fields = ('slug', 'name',)
 
+    fields = ('name', 'slug', 'description',)
     prepopulated_fields = {'slug': ('name',)}
 
 
@@ -22,6 +23,11 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'units_in_stock', 'enabled',)
     
+    fieldsets = ((None, {'fields': ('category', 'title', 'body',)}),
+                 ('Stock Information', {'fields': ('stock_keeping_unit',
+                                                   'unit_cost',
+                                                   'units_in_stock',
+                                                   'enabled')}),)
     prepopulated_fields = {'stock_keeping_unit': ('title',)}
     inlines = [ProductImageInline,]
 
