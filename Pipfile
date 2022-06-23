@@ -8,6 +8,8 @@ django = "*"
 pillow = "*"
 django-widget-tweaks = "*"
 django-mathfilters = "*"
+python-dotenv = "*"
+dj-database-url = "*"
 
 [dev-packages]
 autopep8 = "*"
