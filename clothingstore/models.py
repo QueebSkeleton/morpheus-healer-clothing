@@ -1,6 +1,19 @@
-from unicodedata import decimal
 from django.db import models
 from django.contrib.auth import models as auth_models
+
+
+class Address(models.Model):
+    """
+    Address of a customer. May be used both as billing or shipping address.
+    """
+    user = models.ForeignKey(to=auth_models.User, on_delete=models.CASCADE)
+    street = models.TextField()
+    city = models.TextField()
+    postal_code = models.CharField(max_length=4)
+    province = models.TextField()
+
+    class Meta:
+        verbose_name_plural = 'addresses'
 
 
 class Category(models.Model):

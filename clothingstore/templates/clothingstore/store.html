@@ -5,7 +5,7 @@
 {% block content %}
     {# Banners #}
     {% include 'clothingstore/banner.html' %}
-    <section class="container py-4 px-4">
+    <section class="container py-4 px-4" style="min-height: 50vh;">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {% for product in product_list %}
                 <div class="col mb-5">
@@ -14,6 +14,7 @@
                         {% if product.image_count > 0 %}
                             <img class="card-img-top"
                                  src="{{ product.productimage_set.all.0.image.url }}"
+                                 alt="{{ product.productimage_set.all.0.alternate_text }}"
                                  style="max-width: 450px;">
                         {% else %}
                             <img class="card-img-top"

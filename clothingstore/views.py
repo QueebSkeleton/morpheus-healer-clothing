@@ -42,3 +42,7 @@ def add_to_cart(request, stock_keeping_unit):
 
     return render(request, 'clothingstore/add_to_cart.html',
                   {'form': form, 'product': product})
+
+
+def cart(request):
+    return render(request, 'clothingstore/cart.html', {})

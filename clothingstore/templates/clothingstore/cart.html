@@ -1,0 +1,56 @@
+{% extends 'clothingstore/base.html' %}
+{% load static %}
+{% load mathfilters %}
+{# Title #}
+{% block title %}Your Cart{% endblock %}
+{# Products #}
+{% block content %}
+    {# Banners #}
+    {% include 'clothingstore/banner.html' %}
+    <section class="container py-4">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="2">Product</th>
+                        <th>Unit Price</th>
+                        <th>Qty</th>
+                        <th>Subtotal</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.values %}
+                    <tr>
+                        <td>
+                            {% if item.product.productimage_count > 0 %}
+                            <img src="{{ item.product.productimage_set.all.0.image.url }}" height="50px">
+                            {% else %}
+                            <img src="{% static 'clothingstore/img/placeholder-200x200.jpg' %}" height="50px">
+                            {% endif %}
+                        </td>
+                        <td>{{ item.product.title }}</td>
+                        <td>Php{{ item.product.unit_price|floatformat:2 }}</td>
+                        <td>{{ item.quantity }}x</td>
+                        <td>Php{{ item.product.unit_price|mul:item.quantity|floatformat:2 }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'clothingstore:add_to_cart' item.product.stock_keeping_unit %}"
+                                    class="btn btn-sm btn-primary">
+                                    <i class="bi bi-pen"></i>
+                                    <span class="d-none d-md-inline">Change</span>
+                                </a>
+                                <a href="#"
+                                    class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                    <span class="d-none d-md-inline">Remove</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
