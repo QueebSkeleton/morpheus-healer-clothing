@@ -10,6 +10,7 @@ django-widget-tweaks = "*"
 django-mathfilters = "*"
 python-dotenv = "*"
 dj-database-url = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 autopep8 = "*"
