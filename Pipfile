@@ -11,6 +11,7 @@ django-mathfilters = "*"
 python-dotenv = "*"
 dj-database-url = "*"
 social-auth-app-django = "*"
+django-summernote = "*"
 
 [dev-packages]
 autopep8 = "*"

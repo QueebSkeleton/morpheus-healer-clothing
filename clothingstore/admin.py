@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_summernote import admin as summernote_admin
 
 from .models import Address, Category, Product, ProductImage, Order, OrderItem
 
@@ -39,7 +40,7 @@ class ProductImageInline(admin.TabularInline):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(summernote_admin.SummernoteModelAdmin):
     list_display = ('title', 'units_in_stock', 'enabled',)
 
     fieldsets = ((None, {'fields': ('category', 'title', 'body',)}),
@@ -50,6 +51,7 @@ class ProductAdmin(admin.ModelAdmin):
                                                    'enabled')}),)
     prepopulated_fields = {'stock_keeping_unit': ('title',)}
     inlines = [ProductImageInline, ]
+    summernote_fields = ('body',)
 
 
 class OrderItemInline(admin.TabularInline):

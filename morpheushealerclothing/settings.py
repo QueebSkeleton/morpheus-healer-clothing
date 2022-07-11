@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'mathfilters',
     'social_django',
+    'django_summernote',
     'clothingstore',
 ]
 

@@ -20,6 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('summernote/', include('django_summernote.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('', include('clothingstore.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
