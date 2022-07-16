@@ -11,7 +11,7 @@ from .models import Product
 
 
 def index(request):
-    return HttpResponseRedirect(reverse('clothingstore:store'))
+    return render(request, 'clothingstore/index.html', {})
 
 
 def store(request):
@@ -46,3 +46,7 @@ def add_to_cart(request, stock_keeping_unit):
 
 def cart(request):
     return render(request, 'clothingstore/cart.html', {})
+
+
+def about(request):
+    return render(request, 'clothingstore/about.html', {})

@@ -11,6 +11,8 @@ urlpatterns = [
     path('store/<slug:stock_keeping_unit>/', views.add_to_cart,
          name='add_to_cart'),
     path('cart/', views.cart, name='cart'),
+    
+    path('about/', views.about, name='about'),
 
     # Auth
     path('login/',

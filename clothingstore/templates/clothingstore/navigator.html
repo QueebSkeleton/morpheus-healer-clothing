@@ -1,7 +1,10 @@
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Morpheus Healer Clothing</a>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand text-light" style="line-height: 1rem;" href="{% url 'clothingstore:index' %}">
+            MORPHEUS HEALER <br>
+            <span class="subbrand">Clothing Store</span>
+        </a>
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
@@ -9,44 +12,44 @@
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
                 aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"><i class="fa-solid fa-list text-light"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'clothingstore:index' %}">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'clothingstore:index' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!">About</a>
+                    <a class="nav-link" href="{% url 'clothingstore:store' %}">Shop</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       id="navbarDropdown"
-                       href="#"
-                       role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">Shop</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">All Products</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#!">Popular Items</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#!">New Arrivals</a>
-                        </li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clothingstore:about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
-            <a href="{% url 'clothingstore:cart' %}" class="btn btn-outline-dark">
-                <i class="bi-cart-fill me-1"></i>
-                Cart
-                <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart_total_qty }}</span>
-            </a>
+            <div class="navbar align-self-center d-flex">
+                <form class="d-flex">
+                    <input class="form-control pe-2 search"
+                           type="search"
+                           placeholder="Search"
+                           aria-label="Search">
+                    <button class="search-btn px-3" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-light mr-1" id="cart-btn"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill text-light"
+                              id="notif-circle">7</span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-light mr-3" id="user-btn"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill text-light"
+                              id="notif-circle">+99</span>
+                    </a>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
