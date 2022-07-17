@@ -5,11 +5,11 @@
 {# Products #}
 {% block content %}
     <!-- Open Content -->
-    <section>
+    <section class="bg-darker">
         <div class="container py-5">
             <div class="row g-4">
                 <div class="col-lg-5">
-                    <div class="card">
+                    <div class="card bg-dark text-light">
                         {% if product.image_count > 0 %}
                             <img class="img-fluid"
                                 src="{{ product.productimage_set.all.0.image.url }}"
@@ -23,7 +23,7 @@
                 </div>
                 <!-- col end -->
                 <div class="col-lg-7">
-                    <div class="card">
+                    <div class="card bg-dark text-light">
                         <div class="card-body">
                             <form method="post">
                                 <div class="small mb-1">SKU: {{ product.stock_keeping_unit }}</div>

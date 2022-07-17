@@ -104,6 +104,10 @@
     padding-top: 10px;
 }
 
+.bg-darker{
+    background-color: #141618;
+}
+
 /*
  * Main Content
  */
@@ -118,7 +122,7 @@
  * Sidebar nav
  */
 #sidebar-nav .nav-item .nav-link {
-    color: var(--bs-dark);
+    color: v#1f51ff;
     font-size: 0.9rem;
 }
 
