@@ -1,0 +1,40 @@
+{% extends 'clothingstore/base.html' %}
+{% load widget_tweaks %}
+{# Title #}
+{% block title %}Login to Morpheus Healer Clothing{% endblock %}
+{# Products #}
+{% block content %}
+    {# Banners #}
+    {% include 'clothingstore/banner.html' %}
+    <div class="bg-darker py-3">
+        <section class="container py-4 bg-dark">
+            <div class="row d-flex justify-content-center align-items-center">
+                <form method="post" class="col-md-6">
+                    {% csrf_token %}
+                    <div class="mb-3 text-light">
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        {% render_field form.username class="form-control" %}
+                    </div>
+                    <div class="mb-3 text-light">
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                        {% render_field form.password class="form-control" %}
+                    </div>
+    
+                    <div class="d-grid gap-3">
+                        <button type="submit" class="btn btn-primary">Proceed</button>
+                        <div class="btn-group">
+                            <a href="{% url 'social:begin' 'facebook' %}" class="btn text-white" style="background-color: #3b5998;">
+                                <i class="bi bi-facebook"></i>
+                                <span class="d-none d-md-inline-block">Login with Facebook</span>
+                            </a>
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-outline-dark bg-light">
+                                <img src="https://img.icons8.com/color/16/000000/google-logo.png">
+                                <span class="d-none d-md-inline-block">Login with Google</span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'clothingstore/base.html' %}
+{% load widget_tweaks %}
+{# Title #}
+{% block title %}{{ product.title }} - Morpheus Healer Clothing{% endblock %}
+{# Products #}
+{% block content %}
+    <!-- Open Content -->
+    <section class="bg-darker">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="card bg-dark text-light">
+                        {% if product.image_count > 0 %}
+                            <img class="img-fluid"
+                                src="{{ product.productimage_set.all.0.image.url }}"
+                                alt="{{ product.productimage_set.all.0.alternate_text }}">
+                        {% else %}
+                            <img class="img-fluid"
+                                src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
+                                alt="...">
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="small mb-1">SKU: {{ product.stock_keeping_unit }}</div>
+                                <h1 class="display-5 fw-bolder">{{ product.title }}</h1>
+                                <div class="fs-5 mb-2">
+                                    Php{{ product.unit_price|floatformat:2 }}
+                                </div>
+                                <div class="fs-6 mb-5">
+                                    {{ product.units_in_stock }} items available
+                                </div>
+                                {% if form.quantity.errors %}
+                                    {% for error in form.quantity.errors %}<p class="text-danger">{{ error }}</p>{% endfor %}
+                                {% endif %}
+                                <div class="d-flex">
+                                    {% csrf_token %}
+                                    {% render_field form.quantity class="form-control text-center me-3" style="max-width: 5rem;" %}
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                        <i class="bi-cart-fill me-1"></i>
+                                        Add to cart
+                                    </button>
+                                </div>
+                                <hr>
+                                <div class="d-block lead">{{ product.body|default_if_none:"Description coming soon!"|safe }}</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

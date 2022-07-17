@@ -1,0 +1,245 @@
+{% extends 'clothingstore/base.html' %}
+{% load static %}
+{# Title #}
+{% block title %}Order the clothes you want - Morpheus Healer Clothing{% endblock %}
+{# Content #}
+{% block content %}
+<div class="container-fluid p-4 bg-darker">
+    <!-- Top Content -->
+    <div class="row">
+        <div class="col-md-3 mb-3 bg-dark h-100">
+            <ul class="nav flex-column shadow" id="sidebar-nav">
+                <li class="nav-item border-bottom">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <span>Browse All Products</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="nav-item border-bottom">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <span>Category #1</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="nav-item border-bottom">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <span>Category #2</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <span>Category #3</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="carousel slide shadow bg-dark text-light"
+                 id="hero-carousel"
+                 data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#hero-carousel" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#hero-carousel" data-bs-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container">
+                            <div class="row p-5">
+                                <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                    <img class="img-fluid"
+                                         src="{% static 'clothingstore/img/placeholder-200x200.png' %}"
+                                         alt="Placeholder image"
+                                         style="width: 100%;">
+                                </div>
+                                <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                    <div class="text-align-left align-self-center">
+                                        <h1 class="h1 text-success">
+                                            <b>Morpheus Healer</b> Clothing
+                                        </h1>
+                                        <h3 class="h2">Clothing store in the Greater Manila</h3>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Nam euismod urna a dolor fringilla, nec dictum lacus rutrum.
+                                            In hac habitasse platea dictumst. Nam sed viverra urna, eget rutrum augue.
+                                            Ut ut tincidunt nisi, eu tincidunt tellus. Nullam quis commodo erat.
+                                            Etiam interdum leo mi. Integer eget lacinia elit, non semper sapien.
+                                            Nullam et tellus congue nunc scelerisque fermentum in scelerisque quam.
+                                            Maecenas facilisis efficitur pulvinar. Aliquam gravida egestas consectetur.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="container">
+                            <div class="row p-5">
+                                <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                    <img class="img-fluid"
+                                         src="{% static 'clothingstore/img/placeholder-200x200.png' %}"
+                                         alt="Placeholder image"
+                                         style="width: 100%;">
+                                </div>
+                                <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                    <div class="text-align-left">
+                                        <h1 class="h1">Proident occaecat</h1>
+                                        <h3 class="h2">Aliquip ex ea commodo consequat</h3>
+                                        <p>
+                                            You are permitted to use this Zay CSS template for your commercial websites.
+                                            You are <strong>not permitted</strong> to re-distribute the template ZIP file in any
+                                            kind of template collection websites.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="container">
+                            <div class="row p-5">
+                                <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                    <img class="img-fluid"
+                                         src="{% static 'clothingstore/img/placeholder-200x200.png' %}"
+                                         alt="Placeholder image"
+                                         style="width: 100%;">
+                                </div>
+                                <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                    <div class="text-align-left">
+                                        <h1 class="h1">Repr in voluptate</h1>
+                                        <h3 class="h2">Ullamco laboris nisi ut</h3>
+                                        <p>
+                                            We bring you 100% free CSS templates for your websites.
+                                            If you wish to support TemplateMo, please make a small contribution via PayPal or
+                                            tell your friends about our website. Thank you.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev text-decoration-none w-auto ps-3"
+                   href="#hero-carousel"
+                   role="button"
+                   data-bs-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a class="carousel-control-next text-decoration-none w-auto pe-3"
+                   href="#hero-carousel"
+                   role="button"
+                   data-bs-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr class="text-light">
+    <!-- Main Content -->
+    <h3 class="text-center text-light mb-3">Top Products</h3>
+    <div class="row d-flex justify-content-center">
+        <!-- TODO: Dummy Product -->
+        <div class="col-sm-6 col-md-3 mb-4 bg-darker">
+            <div class="card h-100 shadow bg-dark">
+                <a href="shop-single.html">
+                    <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
+                         class="card-img-top"
+                         alt="...">
+                </a>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
+                        <span class="text-muted">Php 499.99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TODO: Dummy Product -->
+        <div class="col-sm-6 col-md-3 mb-4 bg-darker">
+            <div class="card h-100 shadow bg-dark">
+                <a href="shop-single.html">
+                    <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
+                         class="card-img-top"
+                         alt="...">
+                </a>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
+                        <span class="text-muted">Php 499.99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TODO: Dummy Product -->
+        <div class="col-sm-6 col-md-3 mb-4 bg-darker">
+            <div class="card h-100 shadow bg-dark">
+                <a href="shop-single.html">
+                    <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
+                         class="card-img-top"
+                         alt="...">
+                </a>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
+                        <span class="text-muted">Php 499.99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TODO: Dummy Product -->
+        <div class="col-sm-6 col-md-3 mb-4 bg-darker">
+            <div class="card h-100 shadow bg-dark">
+                <a href="shop-single.html">
+                    <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
+                         class="card-img-top"
+                         alt="...">
+                </a>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
+                        <span class="text-muted">Php 499.99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Support Area  -->
+<div class="text-light pt-5 bg-dark" id="support">
+    <div class="row d-flex justify-content-center w-100">
+        <div class="col-8 col-md-3 mb-4 text-center">
+            <h6>
+                <i class="d-block h1 mb-2 fa-solid fa-lightbulb"></i>
+                THOUGHTFULLY DESIGNED
+            </h6>
+            <p>
+                We design apparel and homeware that feature creative,
+                fun designs for the daring individual.
+            </p>
+        </div>
+        <div class="col-8 col-md-3 mb-4 text-center">
+            <h6>
+                <i class="d-block h1 mb-2 fa-solid fa-tag"></i>
+                ETHICALLY SOURCED
+            </h6>
+            <p>
+                We ensure that all our products are sourced responsibly
+                and made from excellent quality materials.
+            </p>
+        </div>
+        <div class="col-8 col-md-3 mb-4 text-center">
+            <h6>
+                <i class="d-block h1 mb-2 fa-solid fa-comments"></i>
+                GET IN TOUCH
+            </h6>
+            <p>
+                Do you have any questions? Please get in touch with us
+                at any time and we'll be happy to assist you.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
