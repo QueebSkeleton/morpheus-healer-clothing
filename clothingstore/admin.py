@@ -23,7 +23,6 @@ class AddressAdmin(admin.ModelAdmin):
         return '%s, %s, %s %s' % (obj.street, obj.city, obj.postal_code,
                                   obj.province)
 
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name',)

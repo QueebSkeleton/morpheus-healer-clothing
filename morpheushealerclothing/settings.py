@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from decimal import Decimal
 from pathlib import Path
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'widget_tweaks',
     'mathfilters',
     'social_django',
@@ -186,3 +188,8 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+
+# Morpheus Healer Clothing Store
+
+DELIVERY_FEE = Decimal(45.00)

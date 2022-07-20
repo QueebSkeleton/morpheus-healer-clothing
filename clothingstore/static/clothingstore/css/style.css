@@ -1,8 +1,3 @@
-.btn-success,
-.bg-success {
-    background-color: #1f51ff !important;
-    border: none !important;
-}
 
 .btn-success:hover {
     background-color: #163abd !important;

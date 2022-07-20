@@ -38,15 +38,13 @@
                     <button class="search-btn px-3" type="submit">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none" href="{% url "clothingstore:cart" %}">
                         <i class="fa fa-fw fa-cart-arrow-down text-light mr-1" id="cart-btn"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill text-light"
-                              id="notif-circle">7</span>
+                              id="notif-circle">{{ shopping_cart.total_qty }}</span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-user text-light mr-3" id="user-btn"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill text-light"
-                              id="notif-circle">+99</span>
                     </a>
                 </form>
             </div>

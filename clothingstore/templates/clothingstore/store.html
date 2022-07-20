@@ -6,10 +6,10 @@
 <div class="bg-darker text-light">
     <div class="container py-5">
         <div class="row">
-            <div class="accordion col-lg-3 bg-dark" id="CategoryAccordion"><h1 class="h2 pb-4">Categories</h1>
-                <ul class="list-unstyled bg-dark">
+            <div class="accordion col-lg-3" id="CategoryAccordion"><h1 class="h2 pb-4">Categories</h1>
+                <ul class="list-unstyled bg-darker">
                     <li class="pb-3">
-                        <div class="accordion-item border-0 bg-dark">
+                        <div class="accordion-item border-0 bg-darker">
                             <h2 class="accordion-header" id="headingOne">
                                 <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                     Gender
@@ -28,7 +28,7 @@
                     </li>
     
                     <li class="pb-3">
-                        <div class="accordion-item border-0 bg-dark">
+                        <div class="accordion-item border-0 bg-darker">
                             <h2 class="accordion-header" id="headingTwo">
                                 <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Sale
@@ -47,7 +47,7 @@
                     </li>
     
                     <li class="pb-3">
-                        <div class="accordion-item border-0 bg-dark">
+                        <div class="accordion-item border-0 bg-darker">
                             <h2 class="accordion-header" id="headingThree">
                                 <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Product
@@ -71,20 +71,6 @@
             <!-- ITEMS -->
             <div class="col-lg-9 bg-darker">
                 <div class="row">
-                    <div class="col-md-6">
-                        <ul class="list-inline shop-top-menu pb-3 pt-1">
-                            <li class="list-inline-item">
-                                <a class="h3 text-light text-decoration-none mr-3" href="#">All</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="h3 text-light text-decoration-none mr-3" href="#">Men's</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="h3 text-light text-decoration-none" href="#">Women's</a>
-                            </li>
-                        </ul>
-                    </div>
-    
                     <div class="col-md-6 pb-4">
                         <div class="d-flex">
                             <select class="form-control bg-dark border-0 text-light">
@@ -94,16 +80,15 @@
                             </select>
                         </div>
                     </div>
-                    <hr>
                 </div>
-    
+                <hr/>
                 <div class="row gx-4 gx-lg-5">
                     {% for product in product_list %}
                         <div class="col-sm-6 col-md-6">
                             <!-- Product Card -->
                             <div class="card h-100 shadow bg-dark">
                                 <!-- Product Card Image-->
-                                <a href="shop-single.html">
+                                <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}">
                                     {% if product.image_count > 0 %}
                                         <img class="card-img-top"
                                             src="{{ product.productimage_set.all.0.image.url }}"
@@ -118,15 +103,15 @@
                                 <!-- Product Card Body -->
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <a href="shop-single.html" class="h5 text-decoration-none text-light">{{ product.title }}</a>
-                                        <span class="text-muted">Php {{ product.unit_price|floatformat:2 }}</span>
+                                        <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}" class="h5 text-decoration-none text-light">{{ product.title }}</a>
+                                        <span class="text-secondary">Php {{ product.unit_price|floatformat:2 }}</span>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center">
-                                        <a class="btn btn-success mt-auto"
-                                        href="{% url 'clothingstore:add_to_cart' product.stock_keeping_unit %}">
+                                        <a class="btn btn-primary mt-auto"
+                                            href="{% url 'clothingstore:add_to_cart' product.stock_keeping_unit %}">
                                             View product
                                         </a>
                                     </div>
@@ -134,20 +119,6 @@
                             </div>
                         </div>
                     {% endfor %}
-                </div>
-                
-                <div div="row">
-                    <ul class="pagination pagination-lg justify-content-end pt-3">
-                        <li class="page-item">
-                            <a class="page-link active rounded-0 mr-3 shadow-sm border-0 bg-dark" href="#" tabindex="-1">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-0 mr-3 shadow-sm border-0 text-light bg-dark" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-0 shadow-sm border-0 text-light bg-dark" href="#">3</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
