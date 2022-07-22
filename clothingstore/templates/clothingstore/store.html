@@ -3,122 +3,55 @@
 {% block title %}Order the clothes you want{% endblock %}
 {# Products #}
 {% block content %}
-<div class="bg-darker text-light">
+<div class="bg-darker text-light min-height-60">
     <div class="container py-5">
         <div class="row">
-            <div class="accordion col-lg-3" id="CategoryAccordion"><h1 class="h2 pb-4">Categories</h1>
-                <ul class="list-unstyled bg-darker">
-                    <li class="pb-3">
-                        <div class="accordion-item border-0 bg-darker">
-                            <h2 class="accordion-header" id="headingOne">
-                                <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Gender
-                                    <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
-                                </a>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse bg-darker" aria-labelledby="headingOne" data-bs-parent="#CategoryAccordion">
-                                <div class="accordion-body">
-                                    <ul class="collapse show list-unstyled pl-1">
-                                        <li><a class="text-decoration-none" href="#">Men</a></li>
-                                        <li><a class="text-decoration-none" href="#">Women</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-    
-                    <li class="pb-3">
-                        <div class="accordion-item border-0 bg-darker">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Sale
-                                    <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                                </a>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse bg-darker" aria-labelledby="headingTwo" data-bs-parent="#CategoryAccordion">
-                                <div class="accordion-body">
-                                    <ul id="collapseTwo" class="collapse list-unstyled pl-1">
-                                        <li><a class="text-decoration-none" href="#">Sport</a></li>
-                                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-    
-                    <li class="pb-3">
-                        <div class="accordion-item border-0 bg-darker">
-                            <h2 class="accordion-header" id="headingThree">
-                                <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Product
-                                    <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                                    </a>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse bg-darker" aria-labelledby="headingThree" data-bs-parent="#CategoryAccordion">
-                                <div class="accordion-body">
-                                    <ul id="collapseThree" class="collapse list-unstyled pl-1">
-                                        <li><a class="text-decoration-none" href="#">Bag</a></li>
-                                        <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                                        <li><a class="text-decoration-none" href="#">Sunglass</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+            <div class="col-lg-3" id="CategoryAccordion"><h1 class="h2 pb-4">Categories</h1>
+                <nav class="nav flex-md-column">
+                    <a class="nav-link" href="{% url "clothingstore:store" %}">All Products</a>
+                    {% for category in category_list %}
+                        <a class="nav-link" href="{% url "clothingstore:store" category.slug %}">{{ category.name }}</a>
+                    {% endfor %}
+                </nav>
             </div>
     
             <!-- ITEMS -->
             <div class="col-lg-9 bg-darker">
-                <div class="row">
-                    <div class="col-md-6 pb-4">
-                        <div class="d-flex">
-                            <select class="form-control bg-dark border-0 text-light">
-                                <option>Featured</option>
-                                <option>A to Z</option>
-                                <option>Item</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row gx-4 gx-lg-5">
-                    {% for product in product_list %}
-                        <div class="col-sm-6 col-md-6">
-                            <!-- Product Card -->
-                            <div class="card h-100 shadow bg-dark">
-                                <!-- Product Card Image-->
-                                <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}">
-                                    {% if product.image_count > 0 %}
-                                        <img class="card-img-top"
-                                            src="{{ product.productimage_set.all.0.image.url }}"
-                                            alt="{{ product.productimage_set.all.0.alternate_text }}"
-                                            style="max-width: 450px;">
-                                    {% else %}
-                                        <img class="card-img-top"
-                                            src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
-                                            alt="...">
-                                    {% endif %}
-                                </a>
-                                <!-- Product Card Body -->
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}" class="h5 text-decoration-none text-light">{{ product.title }}</a>
-                                        <span class="text-secondary">Php {{ product.unit_price|floatformat:2 }}</span>
-                                    </div>
-                                </div>
-                                <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-primary mt-auto"
-                                            href="{% url 'clothingstore:add_to_cart' product.stock_keeping_unit %}">
-                                            View product
-                                        </a>
+                <div class="row g-4">
+                    {% if product_list %}
+                        {% for product in product_list %}
+                            <div class="col-sm-6">
+                                <!-- Product Card -->
+                                <div class="card shadow bg-dark">
+                                    <!-- Product Card Image-->
+                                    <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}">
+                                        {% if product.image_count > 0 %}
+                                            <img class="card-img-top"
+                                                src="{{ product.productimage_set.all.0.image.url }}"
+                                                alt="{{ product.productimage_set.all.0.alternate_text }}"
+                                                style="max-width: 450px;">
+                                        {% else %}
+                                            <img class="card-img-top"
+                                                src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
+                                                alt="Placeholder image">
+                                        {% endif %}
+                                    </a>
+                                    <!-- Product Card Body -->
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}" class="h5 text-decoration-none text-light">
+                                                {{ product.title }}
+                                                <i class="fas fa-angle-right"></i>
+                                            </a>
+                                            <span class="text-secondary">Php {{ product.unit_price|floatformat:2 }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <h3 class="text-center">There are currently no items in this category.</h3>
+                    {% endif %}
                 </div>
             </div>
         </div>

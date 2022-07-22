@@ -5,22 +5,9 @@
 {# Products #}
 {% block content %}
     <!-- Open Content -->
-    <section class="bg-darker">
-        <div class="container py-5">
-            <div class="row g-4">
-                <div class="col-lg-5">
-                    <div class="card bg-dark text-light">
-                        {% if product.image_count > 0 %}
-                            <img class="img-fluid"
-                                src="{{ product.productimage_set.all.0.image.url }}"
-                                alt="{{ product.productimage_set.all.0.alternate_text }}">
-                        {% else %}
-                            <img class="img-fluid"
-                                src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
-                                alt="...">
-                        {% endif %}
-                    </div>
-                </div>
+    <section class="bg-darker d-flex align-items-center min-height-60 py-4">
+        <div class="container">
+            <div class="row g-3">
                 <!-- col end -->
                 <div class="col-lg-7">
                     <div class="card bg-dark text-light">
@@ -50,6 +37,32 @@
                             </form>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-5 order-lg-first">
+                    {% if product.image_count > 0 %}
+                        <div class="card bg-dark text-light mb-3">
+                            <img class="img-fluid"
+                                src="{{ product.productimage_set.all.0.image.url }}"
+                                alt="{{ product.productimage_set.all.0.alternate_text }}"/>
+                        </div>
+                        <div class="card bg-dark text-light mb-3 p-2">
+                            <div class="row d-flex justify-content-center g-2">
+                                {% for image_entity in product.productimage_set.all %}
+                                    <div class="col-4 text-center">
+                                        <img class="img-fluid w-100"
+                                            src="{{ image_entity.image.url }}"
+                                            alt="{{ image_entity.alternate_text }}"/>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card bg-dark text-light mb-3">
+                            <img class="img-fluid"
+                                src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
+                                alt="Placeholder image"/>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

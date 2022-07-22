@@ -20,7 +20,8 @@ class Category(models.Model):
     """
     Product category, useful for grouping and navigating products.
     """
-    slug = models.SlugField(max_length=80, db_index=True, unique=True)
+    slug = models.SlugField(max_length=80, primary_key=True, db_index=True,
+                            unique=True)
     name = models.CharField(max_length=80)
     description = models.TextField(blank=True)
 
@@ -78,15 +79,18 @@ class Order(models.Model):
                                        ('CNC', 'Cancelled')),
                               max_length=3)
     delivery_fee = models.DecimalField(max_digits=9, decimal_places=4)
+    placed_on = models.DateTimeField(auto_now_add=True)
     additional_notes = models.TextField(null=True, blank=True)
     payment_details = models.TextField()
 
-    def get_total(self):
-        total = 0
+    def get_subtotal(self):
+        subtotal = 0
         for orderitem in self.orderitem_set.all():
-            total += orderitem.get_subtotal()
-        total += self.delivery_fee
-        return total
+            subtotal += orderitem.get_subtotal()
+        return subtotal
+
+    def get_total(self):
+        return self.get_subtotal() + self.delivery_fee
 
 
 class OrderItem(models.Model):

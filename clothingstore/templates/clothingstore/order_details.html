@@ -1,0 +1,103 @@
+{% extends "clothingstore/base.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Title #}
+{% block title %}View Order - Morpheus Healer Clothing Store{% endblock %}
+{# Content #}
+{% block content %}
+    <div class="bg-darker text-light min-height-60 py-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-sm-4 col-md-3">
+                    {% include 'clothingstore/includes/profile_sidenav.html' %}
+                </div>
+                <div class="col-sm-8 col-md-9">
+                    <h1 class="mb-3">View Order #{{ order.id }}</h1>
+                    <div class="container-fluid p-0 mb-3">
+                        <a href="{% url "clothingstore:order_history" %}"
+                            class="btn btn-primary">
+                            <i class="fa-solid fa-reply"></i>
+                            Back
+                        </a>
+                        <a href="{% url "clothingstore:invoice" order.id %}"
+                            class="btn btn-success">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            Get Receipt
+                        </a>
+                    </div>
+                    <div class="container-fluid p-0 mb-3">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label>Name</label>
+                                    <input type="text" disabled
+                                        value="{{ order.placed_by.first_name }} {{ order.placed_by.last_name }}"
+                                        class="form-control"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Status: </label>
+                                    {% if order.status == 'NEW' %}
+                                        <span class="badge bg-primary">NEW</span>
+                                    {% elif order.status == 'PRC' %}
+                                        <span class="badge bg-warning text-black">PROCESSING</span>
+                                    {% elif order.status == 'DLV' %}
+                                        <span class="badge bg-info text-black">DELIVERING</span>
+                                    {% elif order.status == 'DLV' %}
+                                        <span class="badge bg-success text-black">FINISHED</span>
+                                    {% elif order.status == 'DND' %}
+                                        <span class="badge bg-danger">DENIED</span>
+                                    {% elif order.status == 'CNC' %}
+                                        <span class="badge bg-secondary">CANCELLED</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Billing Address</label>
+                                <textarea disabled rows="4" class="form-control">{{ order.billing_address }}</textarea>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Shipping Address</label>
+                                <textarea disabled rows="4" class="form-control">{{ order.shipping_address }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Order Contents</h5>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order_item in order.orderitem_set.all %}
+                                <tr>
+                                    <td>{{ order_item.product.title }}</td>
+                                    <td>Php {{ order_item.unit_price|floatformat:2 }}</td>
+                                    <td>{{ order_item.quantity }}x</td>
+                                    <td>Php {{ order_item.unit_price|mul:order_item.quantity|floatformat:2 }}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="3" class="text-end">Subtotal</td>
+                                    <td>Php {{ order.get_subtotal|floatformat:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end">Delivery Fee</td>
+                                    <td>Php {{ order.delivery_fee|floatformat:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end">Total</td>
+                                    <td>Php {{ order.get_total|floatformat:2 }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

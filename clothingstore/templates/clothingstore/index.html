@@ -9,8 +9,8 @@
             <div class="row d-flex justify-content-center p-5">
                 <div class="col-md-3 order-lg-last">
                     <img class="img-fluid w-100"
-                         src="{% static 'clothingstore/img/placeholder-200x200.png' %}"
-                         alt="Placeholder image"/>
+                         src="{% static 'clothingstore/img/logo.png' %}"
+                         alt="Morpheus Healer Logo"/>
                 </div>
                 <div class="col-md-6 mb-0 d-flex align-items-center">
                     <div class="text-light">
@@ -35,70 +35,37 @@
         <!-- Main Content -->
         <h3 class="text-center text-light mb-3">Top Products</h3>
         <div class="row d-flex justify-content-center">
-            <!-- TODO: Dummy Product -->
-            <div class="col-sm-6 col-md-3 mb-4 bg-darker">
-                <div class="card h-100 shadow bg-dark">
-                    <a href="shop-single.html">
-                        <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
-                             class="card-img-top"
-                             alt="...">
-                    </a>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
-                            <span class="text-muted">Php 499.99</span>
+            {% for product in top_product_list %}
+                <div class="col-sm-6 col-md-4 mb-4 bg-darker">
+                    <!-- Product Card -->
+                    <div class="card shadow bg-dark">
+                        <!-- Product Card Image-->
+                        <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}">
+                            {% if product.image_count > 0 %}
+                                <img class="card-img-top"
+                                     src="{{ product.productimage_set.all.0.image.url }}"
+                                     alt="{{ product.productimage_set.all.0.alternate_text }}"
+                                     style="max-width: 450px;">
+                            {% else %}
+                                <img class="card-img-top"
+                                     src="https://www.alleygators.com.au/wp-content/uploads/2017/10/img-placeholder-02.jpg"
+                                     alt="...">
+                            {% endif %}
+                        </a>
+                        <!-- Product Card Body -->
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url "clothingstore:add_to_cart" product.stock_keeping_unit %}"
+                                   class="h5 text-decoration-none text-light">
+                                    {{ product.title }}
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <span class="text-secondary">Php {{ product.unit_price|floatformat:2 }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- TODO: Dummy Product -->
-            <div class="col-sm-6 col-md-3 mb-4 bg-darker">
-                <div class="card h-100 shadow bg-dark">
-                    <a href="shop-single.html">
-                        <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
-                             class="card-img-top"
-                             alt="...">
-                    </a>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
-                            <span class="text-muted">Php 499.99</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- TODO: Dummy Product -->
-            <div class="col-sm-6 col-md-3 mb-4 bg-darker">
-                <div class="card h-100 shadow bg-dark">
-                    <a href="shop-single.html">
-                        <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
-                             class="card-img-top"
-                             alt="...">
-                    </a>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
-                            <span class="text-muted">Php 499.99</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- TODO: Dummy Product -->
-            <div class="col-sm-6 col-md-3 mb-4 bg-darker">
-                <div class="card h-100 shadow bg-dark">
-                    <a href="shop-single.html">
-                        <img src="{% static 'clothingstore/img/placeholder-1024x600.png' %}"
-                             class="card-img-top"
-                             alt="...">
-                    </a>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <a href="shop-single.html" class="h5 text-decoration-none text-light">Product Title</a>
-                            <span class="text-muted">Php 499.99</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <!-- Support Area  -->

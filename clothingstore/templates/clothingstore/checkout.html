@@ -1,0 +1,187 @@
+{% extends 'clothingstore/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{# Title #}
+{% block title %}Checkout - Morpheus Healer Clothing Store{% endblock %}
+{% block content %}
+<div class="bg-darker text-light py-4">
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <h1>Checkout</h1>
+            <hr/>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-7">
+                    <div class="card bg-dark mb-3">
+                        <div class="card-body">
+                            <h4 class="text-center">
+                                <i class="fas fa-address-card"></i>
+                                Billing Address
+                            </h4>
+                            <hr/>
+                            <div class="row g-3 mb-4">
+                                <div class="col-sm-6">
+                                    <label for="{{ form.billing_street.id_for_label }}">Street</label>
+                                    {% render_field form.billing_street class="form-control"%}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="{{ form.billing_city.id_for_label }}">City</label>
+                                    {% render_field form.billing_city class="form-control"%}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="{{ form.billing_zip.id_for_label }}">Zip Code</label>
+                                    {% render_field form.billing_zip class="form-control"%}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="{{ form.billing_region.id_for_label }}">Region</label>
+                                    {% render_field form.billing_region class="form-control"%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-dark mb-3">
+                        <div class="card-body">
+                            <h4 class="text-center">
+                                <i class="fas fa-address-card"></i>
+                                Shipping Address
+                            </h4>
+                            <hr/>
+                            <div class="mb-3">
+                                {{ form.is_shipping_same_to_billing }}
+                                <label for="{{ form.is_shipping_same_to_billing.id_for_label }}">Same as billing</label>
+                            </div>
+                            <div class="row g-3 mb-4">
+                                <div class="col-sm-6">
+                                    <label for="{{ form.shipping_street.id_for_label }}">Street</label>
+                                    {% render_field form.shipping_street class="form-control"%}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="{{ form.shipping_city.id_for_label }}">City</label>
+                                    {% render_field form.shipping_city class="form-control"%}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="{{ form.shipping_zip.id_for_label }}">Zip Code</label>
+                                    {% render_field form.shipping_zip class="form-control"%}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="{{ form.shipping_region.id_for_label }}">Region</label>
+                                    {% render_field form.shipping_region class="form-control"%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-dark mb-3">
+                        <div class="card-body">
+                            <h4 class="text-center">Additional Details</h4>
+                            <hr/>
+                            {% render_field form.additional_notes rows="3" placeholder="Specify additional requests e.g bring change for Php1000" class="form-control" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-5">
+                    <!-- Shopping Cart -->
+                    <div class="card bg-dark mb-3">
+                        <div class="card-body">
+                            <h4 class="text-center">
+                                <i class="fa-solid fa-shopping-cart"></i>
+                                Your Shopping Cart
+                            </h4>
+                            <hr/>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Product</th>
+                                            <th>Prc</th>
+                                            <th>Qty</th>
+                                            <th>Sub</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in shopping_cart.cart.values %}
+                                            <tr>
+                                                <td>
+                                                    {% if item.product.productimage_count > 0 %}
+                                                        <img src="{{ item.product.productimage_set.all.0.image.url }}"
+                                                                height="50px">
+                                                    {% else %}
+                                                        <img src="{% static 'clothingstore/img/placeholder-200x200.jpg' %}"
+                                                                height="50px">
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-light">
+                                                    <a href="{% url "clothingstore:add_to_cart" item.product.stock_keeping_unit %}"
+                                                        class="text-decoration-none">
+                                                        {{ item.product.title }}
+                                                    </a>
+                                                </td>
+                                                <td class="text-light">Php {{ item.product.unit_price|floatformat:2|intcomma }}</td>
+                                                <td class="text-light">{{ item.quantity }}x</td>
+                                                <td class="text-light">Php {{ item.subtotal|floatformat:2|intcomma }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th colspan="3" class="text-end">Subtotal</th>
+                                            <td colspan="2">Php {{ shopping_cart.subtotal|floatformat:2|intcomma }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="3" class="text-end">Delivery Fee</th>
+                                            <td colspan="2">Php {{ shopping_cart.delivery_fee|floatformat:2|intcomma }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="3" class="text-end">Total</th>
+                                            <td colspan="2">Php {{ shopping_cart.total|floatformat:2|intcomma }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Payment Details and Additional Notes -->
+                    <div class="card bg-dark mb-3">
+                        <div class="card-body">
+                            <h4 class="text-center">
+                                <i class="fa-solid fa-credit-card"></i>
+                                Payment Details
+                            </h4>
+                            <hr/>
+                            <div>
+                                <label for="{{ form.payment_details.id_for_label }}">Payment Details</label>
+                                {% render_field form.payment_details rows="3" class="form-control" %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-shopping-bag"></i>
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+{# Page Scripts #}
+{% block page_scripts %}
+<script>
+    // On click of "same as billing" checkbox
+    let checkbox = document.querySelector("input[name='is_shipping_same_to_billing']");
+    checkbox.addEventListener("change", (event) => {
+        if(event.currentTarget.checked) {
+            document.querySelector("input[name='shipping_street']").value = document.querySelector("input[name='billing_street']").value;
+            document.querySelector("input[name='shipping_city']").value = document.querySelector("input[name='billing_city']").value;
+            document.querySelector("input[name='shipping_zip']").value = document.querySelector("input[name='billing_zip']").value;
+            document.querySelector("input[name='shipping_region']").value = document.querySelector("input[name='billing_region']").value;
+        } else {
+            document.querySelector("input[name='shipping_street']").value = "";
+            document.querySelector("input[name='shipping_city']").value = "";
+            document.querySelector("input[name='shipping_zip']").value = "";
+            document.querySelector("input[name='shipping_region']").value = "";
+        }
+    });
+</script>
+{% endblock page_scripts %}

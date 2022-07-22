@@ -1,18 +1,49 @@
-from django.urls import path, reverse_lazy
+from . import views
 
 from django.contrib.auth import views as auth_views
+from django.urls import path, reverse_lazy
 
-from . import views
 
 app_name = 'clothingstore'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('store/', views.store, name='store'),
-    path('store/<slug:stock_keeping_unit>/', views.add_to_cart,
+    # Index page
+    path('',
+         views.index,
+         name='index'),
+    # Main Store pages
+    path('store/',
+         views.store,
+         name='store'),
+    path('store/<slug:category_slug>/',
+         views.store,
+         name='store'),
+
+    # Cart pages
+    path('cart/',
+         views.cart,
+         name='cart'),
+    path('cart/<slug:product_stock_keeping_unit>/add/',
+         views.add_to_cart,
          name='add_to_cart'),
-    path('cart/', views.cart, name='cart'),
-    
-    path('about/', views.about, name='about'),
+    path('cart/<slug:product_stock_keeping_unit>/remove/',
+         views.remove_from_cart,
+         name='remove_from_cart'),
+    path('cart/remove-everything/',
+         views.remove_all_from_cart,
+         name='remove_everything_from_cart'),
+
+    # Checkout pages
+    path('checkout/',
+         views.checkout,
+         name='checkout'),
+    path('thank-you/',
+         views.thank_you,
+         name='thank_you'),
+
+    # Other pages
+    path('about/',
+         views.about,
+         name='about'),
 
     # Auth
     path('login/',
@@ -20,7 +51,20 @@ urlpatterns = [
              template_name='clothingstore/login.html',
              next_page=reverse_lazy('clothingstore:index')),
          name='login'),
-    path('logout/', auth_views.LogoutView.as_view(
+    path('profile/',
+         views.profile_change,
+         name='profile_change'),
+    path('profile/orders/',
+         views.order_history,
+         name='order_history'),
+    path('profile/orders/<int:order_id>/',
+         views.order_details,
+         name='order_details'),
+    path('profile/orders/<int:order_id>/invoice/',
+         views.invoice,
+         name='invoice'),
+    path('logout/',
+         auth_views.LogoutView.as_view(
              template_name='clothingstore/logout.html'),
          name='logout'),
 ]

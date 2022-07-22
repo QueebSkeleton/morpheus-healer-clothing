@@ -7,6 +7,10 @@
     color: #1f51ff !important;
 }
 
+.min-height-60 {
+    min-height: 60vh;
+}
+
 /*
 * Navbar CSS 
 */
@@ -50,7 +54,7 @@
 }
 
 .search {
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem;
     outline: none;
     border: none;
     background-color: #43474d;
@@ -117,7 +121,7 @@
  * Sidebar nav
  */
 #sidebar-nav .nav-item .nav-link {
-    color: v#1f51ff;
+    color: #1f51ff;
     font-size: 0.9rem;
 }
 

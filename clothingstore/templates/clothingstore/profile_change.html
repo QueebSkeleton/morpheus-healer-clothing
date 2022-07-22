@@ -1,0 +1,38 @@
+{% extends "clothingstore/base.html" %}
+{% load widget_tweaks %}
+{# Title #}
+{% block title %}Your Profile - Morpheus Healer Clothing Store{% endblock %}
+{# Content #}
+{% block content %}
+    <div class="bg-darker text-light d-flex align-items-center min-height-60 py-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-sm-4 col-md-3">
+                    {% include 'clothingstore/includes/profile_sidenav.html' %}
+                </div>
+                <div class="col-sm-8 col-md-9">
+                    <h1 class="mb-3">Change your profile</h1>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-6">
+                                <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                                {% render_field form.first_name class="form-control" %}
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                                {% render_field form.last_name class="form-control" %}
+                            </div>
+                            <div class="col-12">
+                                <label for="{{ form.email.id_for_label }}">Email Address</label>
+                                {% render_field form.email class="form-control" %}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

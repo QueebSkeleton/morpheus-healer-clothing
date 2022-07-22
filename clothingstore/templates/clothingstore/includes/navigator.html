@@ -1,0 +1,84 @@
+{% load static %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand text-light" style="line-height: 1rem;" href="{% url 'clothingstore:index' %}">
+            <div class="row">
+                <div class="col-2">
+                    <img height="40px"
+                         src="{% static 'clothingstore/img/logo.png' %}"
+                         alt="Morpheus Healer Logo"/>
+                </div>
+                <div class="col-10 py-1">
+                    MORPHEUS HEALER <br>
+                    <span class="subbrand">Clothing Store</span>
+                </div>
+            </div>
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fa-solid fa-list text-light"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'clothingstore:index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clothingstore:store' %}">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clothingstore:about' %}">About</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control pe-2 search"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search">
+                <button class="search-btn px-3" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link h-100" href="{% url "clothingstore:cart" %}">
+                        <i class="fa fa-fw fa-cart-arrow-down text-light mr-1"></i>
+                        <span class="badge rounded-pill text-light"
+                            id="notif-circle">{{ shopping_cart.total_qty }}</span>
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link h-100 p-1" href="{% url "clothingstore:profile_change" %}">
+                            {% if backends.associated.all %}
+                                <img src="{{ backends.associated.all.0.extra_data.avatar }}"
+                                    class="rounded-circle" height="30px;">
+                            {% else %}
+                                <i class="fa-solid fa-user" style="line-height: 2rem;"></i>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'clothingstore:logout' %}">
+                            <i class="fa-solid fa-sign-out"></i>
+                            Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'clothingstore:login' %}">
+                            <i class="fa-solid fa-sign-in"></i>
+                            Login
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

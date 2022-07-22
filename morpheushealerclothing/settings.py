@@ -44,6 +44,7 @@ except KeyError:
 # Application definition
 
 INSTALLED_APPS = [
+    'clothingstore',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +56,6 @@ INSTALLED_APPS = [
     'mathfilters',
     'social_django',
     'django_summernote',
-    'clothingstore',
 ]
 
 MIDDLEWARE = [
@@ -109,6 +109,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+LOGIN_URL = reverse_lazy('clothingstore:login')
 LOGIN_REDIRECT_URL = reverse_lazy('clothingstore:index')
 
 
@@ -187,6 +188,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
+    'clothingstore.social_pipelines.get_avatar',
 )
 
 

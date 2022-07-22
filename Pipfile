@@ -12,6 +12,7 @@ python-dotenv = "*"
 dj-database-url = "*"
 social-auth-app-django = "*"
 django-summernote = "*"
+pyinvoice = "*"
 
 [dev-packages]
 autopep8 = "*"
