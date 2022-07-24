@@ -1,3 +1,19 @@
+:root {
+  --gradient-blue: linear-gradient(to top, #001F47, #2a548b);
+  --gradient-gray: linear-gradient(to top, #000000, #272727);
+  --text-on-dark: white;
+  --text-on-light: black;
+  --cl-light: #005092;
+  --cl-lighter: #6dbdff;
+  --cl-lightest: #b1d6ff;
+  --cl-dark: #003375;
+  --cl-darker: #002f69;
+  --cl-darkest: #002558;
+  --cl-hover: rgba(223, 223, 223, 0.863);
+  --cl-dark2: #3a3a3a;
+  --cl-gray: #212529;
+}
+
 .hiddenfields {
   display: none;
 }
@@ -63,7 +79,7 @@
 #changelist .actions-bottom .info-actions .label,
 #changelist .actions-bottom .info-actions a {
   background: transparent;
-  color: #333;
+  color: var(--cl-light);
 }
 .place-info-actions {
   display: none;
@@ -158,14 +174,14 @@
   margin-right: -21px;
 }
 #changelist-filter h2 {
-  background: #333;
-  border-bottom: 2px solid #428bca;
+  background: var(--cl-light);
+  border-bottom: 2px solid var(--cl-darkest);
   color: #fff;
   margin: 0;
   padding: 5px;
 }
 #changelist-filter h3 {
-  background: #333333;
+  background: var(--cl-light);
   color: #5bc0de;
   margin: 0 0 5px;
   padding: 5px;

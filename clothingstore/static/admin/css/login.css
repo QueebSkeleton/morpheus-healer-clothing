@@ -1,10 +1,14 @@
+:root {
+    --gradient-blue: linear-gradient(180deg, #001F47, #2a548b);
+    
+}
+
 body {
     padding-top: 120px;
+    background: var(--gradient-blue);
+    background-attachment: fixed;
 }
 #content-main {
-    background: #272727;
-    border-bottom: 2px solid #444;
-    border-top: 2px solid #444;
     padding: 20px 0;
 }
 #login-form {

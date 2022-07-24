@@ -28,12 +28,12 @@
         {% block branding %}
           <a href="{% url 'admin:index' %}" class="django-admin-logo">
               <!-- Django Administration -->
-              <img height="60" src="{% static "bootstrap_admin/img/logo-140x60.png" %}" alt="{{ site_header|default:_('Django administration') }}">
+              <img height="60" src="{% static "bootstrap_admin/img/mh-logo.png" %}" alt="{{ site_header|default:_('Django administration') }}">
           </a>
         {% endblock branding %}
         <fieldset>
           <legend>
-            {{ site_header|default:_('Django administration') }} - {{ title }}
+            {{ site_header|default:_('Django administration') }} - Admin
           </legend>
 
           {% if form.errors or form.non_field_errors %}

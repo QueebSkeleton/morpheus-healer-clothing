@@ -1,5 +1,22 @@
+:root {
+  --gradient-blue: linear-gradient(to top, #001F47, #2a548b);
+  --gradient-gray: linear-gradient(to top, #000000, #272727);
+  --text-on-dark: white;
+  --text-on-light: black;
+  --cl-light: #005092;
+  --cl-lighter: #6dbdff;
+  --cl-lightest: #b1d6ff;
+  --cl-dark: #003375;
+  --cl-darker: #002f69;
+  --cl-darkest: #002558;
+  --cl-hover: rgba(223, 223, 223, 0.863);
+  --cl-dark2: #3a3a3a;
+  --cl-gray: #212529;
+}
+
 body {
-  background: #f5f5f5;
+  background: var(--gradient-blue);
+  background-attachment: fixed;
 }
 select {
   -webkit-appearance: none;
@@ -96,7 +113,7 @@ select {
 /* Hide for mobile, show later */
 
 .sidebar-menu {
-  background-color: #393939;
+  background-color: var(--cl-light);
   bottom: 0;
   display: block;
   left: 0;
@@ -106,10 +123,12 @@ select {
   position: fixed;
   top: 0;
   z-index: 1000;
+  border-right-color: var(--cl-darkest);
+  
 }
 .sidebar-menu .django-admin-logo {
-  background: #282829;
-  border-bottom: 1px solid #222;
+  background: var(--cl-light);
+  border-bottom: 1px solid var(--cl-darkest);
   color: #fff;
   display: block;
   height: 61px;
@@ -140,14 +159,14 @@ select {
   color: #fff;
 }
 .sidebar-menu .nav-sidebar a {
-  border-left: 2px solid #393939;
+  border-left: 2px solid var(--cl-darker);
   color: #fff;
   height: 43px;
   padding: 12px 5px 12px 20px;
   transition: border 0.4s ease-in-out 0s, color 0.3s ease-in-out 0s, background-color 0.4s ease-in-out 0s;
 }
 .sidebar-menu .nav-sidebar a:hover {
-  background: #333;
+  background: var(--cl-darker);
   color: #ccc;
   border-color: #428bca;
 }
@@ -156,12 +175,12 @@ select {
   text-transform: uppercase;
 }
 .sidebar-menu .nav-sidebar.has-active-menu {
-  background: #333;
-  border: 1px solid #444;
+  background: var(--cl-light);
+  border: 1px solid var(--cl-darkest);
   border-left: 0;
 }
 .sidebar-menu .nav-sidebar.has-active-menu a {
-  border-left: 2px solid #333;
+  border-left: 2px solid var(--cl-light);
 }
 .sidebar-menu .active a:after {
   border-bottom: 10px solid transparent;
@@ -176,8 +195,8 @@ select {
 }
 .sidebar-menu .nav-sidebar .active a {
   color: #428bca;
-  border-color: #333;
-  background-color: #333;
+  border-color: var(--cl-light);
+  background-color: var(--cl-light);
 }
 .sidebar-menu .nav-sidebar .active a:hover,
 .sidebar-menu .nav-sidebar.has-active-menu a:hover {
@@ -212,8 +231,8 @@ select {
   border: 1px solid #dfdfdf;
 }
 .show-hide-sidebar-menu .icon-bar {
-  background: none repeat scroll 0 0 #333333;
-  border: 1px solid #444444;
+  background: none repeat scroll 0 0 var(--cl-light);
+  border: 1px solid var(--cl-light);
   border-radius: 1px;
   display: block;
   height: 2px;
@@ -232,8 +251,8 @@ select {
  */
 
 .main-header {
-  background: none repeat scroll 0 0 #efefef;
-  border-bottom: 1px solid #dddddd;
+  background: none repeat scroll 0 0 var(--cl-gray);
+  border-bottom: 1px solid var(--cl-dark2);
   box-shadow: 0 1px 0 0 #dddddd;
   height: 35px;
   margin: 0 -15px;
@@ -246,6 +265,7 @@ select {
   padding: 3px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color:var(--text-on-dark);
 }
 .main-header h1 .django-admin-title {
   display: none;
@@ -290,8 +310,8 @@ select {
    maximize the compatibility with bootstrap_admin */
 .breadcrumbs,
 .breadcrumb {
-  background: #efefef;
-  border-bottom: 2px solid #e5e5e5;
+  background: var(--cl-dark2);
+  border-bottom: 2px solid var(--cl-darkest);
   border-radius: 0;
   height: 26px;
   margin: 0 -15px 15px;
@@ -299,19 +319,24 @@ select {
   padding: 3px 15px 0;
   text-overflow:ellipsis;
   white-space: nowrap;
+  
 }
 .breadcrumb > li {
   float: left;
+  
 }
 .breadcrumb > li.home {
   width: 20px;
+  color:var(--cl-lightest);
 }
 .breadcrumb > li.active {
   display: inline;
   float: none;
+  color:var(--text-on-dark);
 }
 .breadcrumb > li + li:before {
   padding:0 0 0 7px;
+  
 }
 
 @media (max-width: 768px) {
@@ -320,12 +345,14 @@ select {
     text-overflow:ellipsis;
     max-width: 150px;
     white-space: nowrap;
+    
   }
 }
 
 @media (max-width: 767px) {
   .main-header h1 {
     font-size: 18px;
+    
   }
   .breadcrumb > li {
     max-width: 100px;
