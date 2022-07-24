@@ -3,6 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.urls import path, reverse_lazy
 
+from django.contrib.admin import site as admin_site
 
 app_name = 'clothingstore'
 urlpatterns = [
@@ -68,3 +69,6 @@ urlpatterns = [
              template_name='clothingstore/logout.html'),
          name='logout'),
 ]
+
+admin_site.site_header = 'Morpheus Healer Clothing Store'
+admin_site.index_title = 'Dashboard'

@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.urls import reverse_lazy
+from django.utils.html import mark_safe
+
 from django_summernote import admin as summernote_admin
 
 from .models import Address, Category, Product, ProductImage, Order, OrderItem
@@ -62,7 +65,7 @@ class OrderItemInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('placed_by', 'billing_address',
-                    'shipping_address', 'status', 'get_total')
+                    'shipping_address', 'status', 'get_total', 'invoice')
     list_filter = ('status',)
 
     inlines = [OrderItemInline, ]
@@ -74,3 +77,8 @@ class OrderAdmin(admin.ModelAdmin):
     @admin.display
     def placed_by(self, obj):
         return obj.placed_by.first_name + ' ' + obj.placed_by.last_name
+
+    @admin.display
+    def invoice(self, obj):
+        return mark_safe('<a href="/profile/orders/' + str(obj.id)
+                         + '/invoice/" target="_blank">PDF</a>')

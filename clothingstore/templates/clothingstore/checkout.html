@@ -147,8 +147,11 @@
                             </h4>
                             <hr/>
                             <div>
-                                <label for="{{ form.payment_details.id_for_label }}">Payment Details</label>
-                                {% render_field form.payment_details rows="3" class="form-control" %}
+                                <label for="{{ form.payment_details.id_for_label }}">
+                                    Payment Details
+                                    <span class="badge bg-warning">(Online Pay Soon!)</span>
+                                </label>
+                                {% render_field form.payment_details readonly="true" rows="3" class="form-control" %}
                             </div>
                         </div>
                     </div>

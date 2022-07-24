@@ -155,13 +155,16 @@ def checkout(request):
                                               unit_price=product.unit_price,
                                               quantity=cart[product_sku])
                 order_item.save()
+                # Deduct items
+                product.units_in_stock -= order_item.quantity
+                product.save()
             # Remove cart from session
             del request.session['cart']
             # Redirect to thank you page
             return HttpResponseRedirect(reverse('clothingstore:thank_you'))
 
     else:
-        form = forms.CheckoutForm()
+        form = forms.CheckoutForm({'payment_details': 'Cash-on-Delivery'})
 
     return render(request, 'clothingstore/checkout.html', {'form': form})
 
@@ -232,6 +235,13 @@ def invoice(request, order_id):
     # Invoice Headers
     doc.invoice_info = pyinvoice_models.InvoiceInfo(
         order_id, order.placed_on)
+    # Invoice Provider Information
+    doc.service_provider_info = pyinvoice_models.ServiceProviderInfo(
+        name='Morpheus Healer Clothing Store',
+        street='4 Natib Street, Brgy. Barangka',
+        city='Mandaluyong City',
+        country='Philippines',
+        post_code='1550')
     # Invoice Client Information
     billing_address = order.billing_address.split(os.linesep)
     billing_cityinfo = billing_address[3].split(' ')

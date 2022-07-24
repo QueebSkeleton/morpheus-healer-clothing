@@ -450,11 +450,11 @@
         },
         "djlint": {
             "hashes": [
-                "sha256:0dbbac71c4bbe227fef9d9dd1911e7fcbf2a138b6ed6bf819ac7851718512f28",
-                "sha256:c94fe5f1b2148d2f8ce230cc0bbb847734f1d777175ed06a1cc589282f37d4e0"
+                "sha256:67fba056dbbe101a55daa22af2c742006eaee56776a3e467922ff5393b7c750e",
+                "sha256:9b0dc8df3321e656b3f90b9a32cd12e231a2a30558f8410f54d6a8b4671ef1ef"
             ],
             "index": "pypi",
-            "version": "==1.7.0"
+            "version": "==1.7.1"
         },
         "html-tag-names": {
             "hashes": [
