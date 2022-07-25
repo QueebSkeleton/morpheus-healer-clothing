@@ -13,24 +13,34 @@
                     <div class="card bg-dark text-light">
                         <div class="card-body">
                             <form method="post">
-                                <div class="small mb-1">SKU: {{ product.stock_keeping_unit }}</div>
-                                <h1 class="display-5 fw-bolder">{{ product.title }}</h1>
-                                <div class="fs-5 mb-2">
-                                    Php{{ product.unit_price|floatformat:2 }}
-                                </div>
-                                <div class="fs-6 mb-5">
-                                    {{ product.units_in_stock }} items available
+                                <div class="row g-4 mb-3">
+                                    <div class="col-sm-8">
+                                        <h3 class="display-5">{{ product.title }}</h3>
+                                        <div class="fs-6">
+                                            {{ product.units_in_stock }} items available
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="small mb-1">SKU: {{ product.stock_keeping_unit }}</div>
+                                        <div class="fs-5 mb-2">
+                                            Php{{ product.unit_price|floatformat:2 }}
+                                        </div>
+                                    </div>
                                 </div>
                                 {% if form.quantity.errors %}
                                     {% for error in form.quantity.errors %}<p class="text-danger">{{ error }}</p>{% endfor %}
                                 {% endif %}
                                 <div class="d-flex">
                                     {% csrf_token %}
-                                    {% render_field form.quantity class="form-control text-center me-3" style="max-width: 5rem;" %}
-                                    <button class="btn btn-primary flex-shrink-0" type="submit">
-                                        <i class="fa-solid fa-shopping-cart"></i>
-                                        Add to cart
-                                    </button>
+                                    {% if product.units_in_stock > 0%}
+                                        {% render_field form.quantity class="form-control text-center me-3" style="max-width: 5rem;" %}
+                                        <button class="btn btn-primary flex-shrink-0" type="submit">
+                                            <i class="fa-solid fa-shopping-cart"></i>
+                                            Add to cart
+                                        </button>
+                                    {% else %}
+                                        <p class="text-danger">This product is out of stock.</p>
+                                    {% endif %}
                                 </div>
                                 <hr>
                                 <div class="d-block lead">{{ product.body|default_if_none:"Description coming soon!"|safe }}</div>

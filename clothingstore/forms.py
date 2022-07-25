@@ -44,7 +44,7 @@ class CheckoutForm(forms.ModelForm):
 
     class Meta:
         model = models.Order
-        fields = ['additional_notes', 'payment_details',]
+        fields = ['contact_number', 'additional_notes', 'payment_details',]
 
 
 class ProfileChangeForm(forms.ModelForm):

@@ -1,13 +1,16 @@
 from . import forms
 from . import models
 
+import datetime
+
 import io
 import os
 
 from django.conf import settings
 from django.contrib.auth import decorators as auth_decorators
+from django.contrib.admin.views import decorators as admin_decorators
 from django.db import models as db_models
-from django.http import HttpResponseRedirect, FileResponse
+from django.http import HttpResponseRedirect, FileResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -34,6 +37,7 @@ def store(request, category_slug=None):
     category_list = models.Category.objects.all()
     # Fetch all products
     product_list = (models.Product.objects.all()
+                          .filter(enabled=True)
                           .prefetch_related('productimage_set')
                           .annotate(image_count=db_models
                                     .Count('productimage')))
@@ -41,6 +45,10 @@ def store(request, category_slug=None):
     if category_slug:
         category = models.Category.objects.get(pk=category_slug)
         product_list = product_list.filter(category=category)
+    
+    # If search query is present, filter products by that
+    if request.GET.get('q'):
+        product_list = product_list.filter(title__contains=request.GET.get('q'))
 
     return render(request, 'clothingstore/store.html',
                   {'product_list': product_list,
@@ -101,13 +109,6 @@ def cart(request):
     User shopping cart page.
     """
     return render(request, 'clothingstore/cart.html', {})
-
-
-def about(request):
-    """
-    Store's about page.
-    """
-    return render(request, 'clothingstore/about.html', {})
 
 
 @auth_decorators.login_required
@@ -228,7 +229,7 @@ def invoice(request, order_id):
                    .select_related('placed_by')
                    .prefetch_related(db_models.Prefetch(
                        'orderitem_set', queryset=items))[0])
-    
+
     buffer = io.BytesIO()
 
     doc = pyinvoice_templates.SimpleInvoice(buffer)
@@ -243,12 +244,10 @@ def invoice(request, order_id):
         country='Philippines',
         post_code='1550')
     # Invoice Client Information
-    billing_address = order.billing_address.split(os.linesep)
-    billing_cityinfo = billing_address[3].split(' ')
+    billing_address = order.billing_address.replace(os.linesep, '\n')
     doc.client_info = pyinvoice_models.ClientInfo(
         name='%s %s' % (order.placed_by.first_name, order.placed_by.last_name),
-        email=order.placed_by.email, street=billing_address[1],
-        post_code=billing_cityinfo[0], city=billing_cityinfo[1],
+        email=order.placed_by.email, street=billing_address,
         country='Philippines')
     # Invoice items
     for order_item in order.orderitem_set.all():
@@ -257,9 +256,38 @@ def invoice(request, order_id):
             order_item.quantity,
             '%.2f' % order_item.unit_price))
     doc.add_item(pyinvoice_models.Item(
-            'Delivery Fee', '',
-            1, '%.2f' % order.delivery_fee))
+        'Delivery Fee', '',
+        1, '%.2f' % order.delivery_fee))
     doc.finish()
 
     buffer.seek(0)
     return FileResponse(buffer, filename='invoice_%d.pdf' % order.id)
+
+
+@admin_decorators.staff_member_required
+def sales_last2weeks_chartjs(request):
+    # Fetch all orders from last two weeks
+    sales_last2weeks = (models.Order.objects.values('placed_on__date')
+                              .annotate(total=db_models.F('delivery_fee')
+                                        + db_models.Sum(db_models.F('orderitem__quantity')
+                                                        * db_models.F('orderitem__unit_price')))
+                              .filter(placed_on__date__gt=datetime.date.today()
+                                      - datetime.timedelta(days=14),
+                                      status='FIN'))
+    # Create sales dictionary
+    sales_dict = {}
+    for i in reversed(range(14)):
+        sales_dict[datetime.date.today() - datetime.timedelta(days=i)] = 0
+    # Merge order sales queryset into sales dictionary
+    for day_sale in sales_last2weeks:
+        sales_dict[day_sale['placed_on__date']] = day_sale['total']
+    # Transform sales into Chart.JS data
+    return JsonResponse({
+        'labels': list(sales_dict.keys()),
+        'datasets': [{
+            'label': 'Sale',
+            'backgroundColor': 'rgb(255, 99, 132)',
+            'borderColor': 'rgb(255, 99, 132)',
+            'data': list(sales_dict.values()),
+        }]
+    })

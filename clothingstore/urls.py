@@ -41,11 +41,6 @@ urlpatterns = [
          views.thank_you,
          name='thank_you'),
 
-    # Other pages
-    path('about/',
-         views.about,
-         name='about'),
-
     # Auth
     path('login/',
          auth_views.LoginView.as_view(
@@ -68,6 +63,11 @@ urlpatterns = [
          auth_views.LogoutView.as_view(
              template_name='clothingstore/logout.html'),
          name='logout'),
+
+    # Charts
+    path('charts/sales-last2weeks/',
+         views.sales_last2weeks_chartjs,
+         name='sales_last2weeks'),
 ]
 
 admin_site.site_header = 'Morpheus Healer Clothing Store'

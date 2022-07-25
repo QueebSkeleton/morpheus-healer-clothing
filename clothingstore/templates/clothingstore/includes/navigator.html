@@ -32,15 +32,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'clothingstore:store' %}">Store</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'clothingstore:about' %}">About</a>
-                </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control pe-2 search"
+            <form action="{% url "clothingstore:store" %}" class="d-flex">
+                <input class="form-control pe-2 search text-light"
                         type="search"
+                        name="q"
                         placeholder="Search"
-                        aria-label="Search">
+                        aria-label="Search"
+                        value="{{ request.GET.q }}"/>
                 <button class="search-btn px-3" type="submit">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>

@@ -75,7 +75,14 @@
                         <div class="card-body">
                             <h4 class="text-center">Additional Details</h4>
                             <hr/>
-                            {% render_field form.additional_notes rows="3" placeholder="Specify additional requests e.g bring change for Php1000" class="form-control" %}
+                            <div class="mb-3">
+                                <label for="{{ form.contact_number.id_for_label }}">Contact No.</label>
+                                {% render_field form.contact_number class="form-control" %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="{{ form.additional_notes.id_for_label }}">Other requests</label>
+                                {% render_field form.additional_notes rows="3" placeholder="Specify additional requests e.g bring change for Php1000" class="form-control" %}
+                            </div>
                         </div>
                     </div>
                 </div>
